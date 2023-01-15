@@ -1,0 +1,180 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+
+    <section class="section menu">
+        <div class="container">
+            <div class="menu-wrap">
+                <div class="menu-nav">
+                    <a href="{% url 'list-category' %}" class="menu__link">Маркетплейс</a>
+                    <a href="{% url 'index-catalog' %}" class="menu__link">Каталог артистов</a>
+                    <a href="{% url 'index-media' 'all' 'none' %}" class="menu__link">Статьи</a>
+                    <a href="#" class="menu__link">Афиша</a>
+                    <a href="#" class="menu__link">Мерч</a>
+                </div>
+                <div class="menu-search">
+                         {% if request.user.is_authenticated %}<a href="{% url 'profile' %}" class="menu__link">Профиль</a>
+                                                              <a href="{% url 'logout' %}" class="menu__link">Выйти</a>
+                                                    {% else %}<a href="{% url 'login' %}" class="menu__link">Войти</a>{% endif %}
+                        <i class="fa fa-search"></i>
+                    </div>
+            </div>
+            <div class="hero">
+                <div class="container">
+                    <h1 class="hero__title">Информационный портал<br><span>&laquo;Rock Stars&raquo;</span>
+                    </h1>
+                    <h3 class="hero__subtitle">Авторские статьи и&nbsp;переводы, новости, персональные блоги
+                        музыкантов
+                        и&nbsp;представителей музиндустрии</h3>
+                </div>
+            </div>
+        </div>
+    </section>    
+    </header>
+    <section class="section smi">
+        <div class="container">
+            <div class="smi-wrap">
+                <div class="smi-content" id = "list-elements">
+                    {% for article in articles%}
+                        <div class="smi-item">
+                            <div class="smi-item__header">
+                                <div class="smi-item__date">{{article.create_date}}</div>
+                                <div class="smi-item__author">
+                                    <div class="smi-item__avatar">
+                                        <img src="{{MEDIA_URL}}{{article.id_project.image}}" alt="" class="smi-item__avaimg">
+                                    </div>
+                                    <a href="#" class="smi-item__link">{{article.id_project}}</a>
+                                </div>
+                            </div>
+                            <div class="smi-item__preview">
+                                <div class="smi-item__title">
+                                    <a href="{% url 'detail-media' url_section article.id %}" class="smi-item__titlelink">{{article.title}}</a>
+                                </div>
+                                <div class="smi-item__text">
+                                    <p>{{article.preview_text|safe}}</p>
+                                </div>
+                            </div>
+                            <div class="smi-item__img">
+                                <a href="{% url 'detail-media' url_section article.id %}" class="smi-item__link"><img src="{{ MEDIA_URL }}{{article.preview_img}}"
+                                        alt=""></a>
+                            </div>
+                            <div class="smi-item__footer">
+                                <div class="smi-item__comments">
+                                    <a href="#" class="smi-item__titlelink"><i class="fa fa-comments"></i> 0
+                                        комментариев</a>
+                                </div>
+                                <div class="smi-item__watchcounter">
+                                    <p><i class="fa fa-eye"></i>{{article.views}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!--новости-->
+                <div class="smi-sidebar">
+                    <section class="smi-news">
+                        {% for item in news%}
+                            <div class="smi-news__item">
+                                <div class="smi-news__date">{{item.news_date}}</div>
+                                <div class="smi-news__text"><a href="{% url 'news-media' item.id %}">{{item.news_header}}</a></div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                    <div class="section smi-menu">
+                        <div class="smi-menu__wrap">
+                            <ul class="smi-menu__list">
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.0.section_name_eng 'none' %}"><i class="fa fa-file-text-o"
+                                            aria-hidden="true"></i>{{sections.0.section_name}}<span>{{sections.0.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.1.section_name_eng 'none' %}"><i class="fa fa-check-square-o"
+                                            aria-hidden="true"></i>{{sections.1.section_name}}<span>{{sections.1.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.2.section_name_eng 'none' %}"><i class="fa fa-lightbulb-o"
+                                            aria-hidden="true"></i>{{sections.2.section_name}}<span>{{sections.2.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.3.section_name_eng 'none' %}"><i class="fa fa-address-book-o"
+                                            aria-hidden="true"></i>{{sections.3.section_name}}<span>{{sections.3.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.4.section_name_eng 'none' %}"><i class="fa fa-hashtag"
+                                            aria-hidden="true"></i>{{sections.4.section_name}}<span>{{sections.4.article_set.count}}</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section smi-tags">
+                        <div class="smi-tags__wrap">
+                            {% for tag in tags %}
+                                <a href="{% url 'index-media' url_section tag.id %}" class="smi-tags__item">{{tag.tag_name}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% comment %} {% if articles.paginator.num_pages > 1 %}
+                <div id="pagination">
+                    {% if articles.has_previous %}
+                        <a class="p-link" href="?page=1">Первая</a>
+                    {% endif %}
+                    {% if articles.has_previous %}
+                        <a class="p-link" href="?page={{ articles.previous_page_number }}">Предыдущая</a>
+                    {% endif %}
+                        <span class="current">
+                    {% for i in articles.paginator.page_range %}
+                    {% if i == articles.number %}
+                        [ {{ i }} ]
+                    {% else %}
+                        <a class="p-link" href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                    </span>
+                    {% if articles.has_next %}
+                        <a class="p-link" href="?page={{ articles.next_page_number }}">Следующая</a>
+                    {% endif %}
+                    {% if articles.has_next %}
+                        <a class="p-link" href="?page={{ articles.paginator.num_pages }}">Последняя</a>
+                    {% endif %}
+                </div>
+            {% endif %} {% endcomment %}
+                            
+                <div id="pagination">
+                    {% if articles.has_next %}
+                        <a class="p-link" href="?page={{ articles.next_page_number }}">Читать далее</a>
+                    {% endif %}
+                </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        //lightGallery(document.getElementById('lightgallery'));
+
+        function ajax_pagination() {
+        $('#pagination a.p-link').each((index, elem) => {
+        $(elem).click((e) => {
+        e.preventDefault() // Останавливаем событие
+        let page_url = $(elem).attr('href')
+
+        $.ajax({
+        url: page_url,
+        type: 'GET',
+        success: (data) => {
+        //$('#list-elements').empty()
+        $('#list-elements').append($(data).find('#list-elements').html())
+        
+        $('#pagination').empty()
+        $('#pagination').append($(data).find('#pagination').html())
+        }
+        })
+        })
+        })
+        }
+
+        $(document).ready(function() {
+        ajax_pagination()
+        get_rating()
+        })
+
+        $(document).ajaxStop(function() {
+        ajax_pagination()
+        get_rating()
+        })  
+    </script>
+{% endblock %}
+

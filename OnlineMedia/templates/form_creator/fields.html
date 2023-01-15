@@ -1,0 +1,61 @@
+<div fieldWrapper id="list-elements">
+    <div id="uploading">
+        {% if case == 1 %}
+        <div name="module={{position}}.header">
+            <br/>
+            <br/>
+            Заголовок   
+            <br/>
+            <input type="input" name="{{position}}.header" class="form-control mb-2 mr-sm-2 {{position}}.header" id="inlineFormInputName2" style="width: 600px;" placeholder="Заголовок" maxlength="200" required=""> 
+            <button class="btn btn-danger" onclick = "destroy_object('module={{position}}.header');" >Удалить элемент</button>     
+        </div>   
+        {% endif %}
+        {% if case == 2 %}
+        <div name="module={{position}}.paragraph">
+            <br/>
+            <br/>
+            Абзац   
+            <br/>
+            <textarea name="{{position}}.paragraph" cols="40" rows="10" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" style="resize: none;" placeholder="Абзац" maxlength="200" required=""></textarea> 
+            <button class="btn btn-danger" onclick = "destroy_object('module={{position}}.paragraph');" >Удалить элемент</button>     
+        </div>
+        {% endif %}
+        {% if case == 3 %}
+        <div name="module={{position}}.image">
+            <br/>
+            <br/>
+            Изображение   
+            <br/>
+            <input type="file" name="{{position}}.image" class="" id="inlineFormInputName2" placeholder="Изображение" accept="image/*" required="">
+            <button class="btn btn-danger" onclick = "destroy_object('module={{position}}.image');" >Удалить элемент</button>
+        </div>
+        {% endif %}
+        {% if case == 4 %}
+        <div name="module={{position}}.quote">
+            <br/>
+            <br/>
+            Цитата   
+            <br/>
+            <input type="input" name="{{position}}.quote" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" style="width: 1000px;" placeholder="Цитата" maxlength="200" required="">
+            <button class="btn btn-danger" onclick = "destroy_object('module={{position}}.quote');" >Удалить элемент</button>
+        </div>
+        {% endif %}
+        {% if case == 5 %}
+        <div name="module={{position}}.video">
+            <br/>
+            <br/>
+            Видео   
+            <br/>
+            <input type="input" name="{{position}}.video" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" style="width: 1000px;" placeholder="Ссылка на видео" maxlength="200" required="">
+            <button class="btn btn-danger" onclick = "destroy_object('module={{position}}.video');" >Удалить элемент</button>
+        </div>
+        {% endif %}
+    </div>
+    <div id="loading">
+        <a class="p-link btn btn-warning" href="?upload=1&position={{position}}">Добавить Заголовок</a>
+        <a class="p-link btn btn-warning" href="?upload=2&position={{position}}">Добавить Абзац</a> 
+        <a class="p-link btn btn-warning" href="?upload=3&position={{position}}">Добавить Изображение</a>
+        <a class="p-link btn btn-warning" href="?upload=4&position={{position}}">Добавить Цитату</a>
+        <a class="p-link btn btn-warning" href="?upload=5&position={{position}}">Добавить Видео</a>
+    </div>
+</div>

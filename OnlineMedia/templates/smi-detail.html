@@ -1,0 +1,125 @@
+{% extends 'wrapper.html' %}
+
+{% block content %}
+        <section class="section menu">
+            <div class="container">
+                <div class="menu-wrap">
+                    <div class="menu-nav">
+                        <a href="{% url 'list-category' %}" class="menu__link">Маркетплейс</a>
+                        <a href="{% url 'index-catalog' %}" class="menu__link">Каталог артистов</a>
+                        <a href="{% url 'index-media' 'all' 'none' %}" class="menu__link">Статьи</a>
+                        <a href="#" class="menu__link">Афиша</a>
+                        <a href="#" class="menu__link">Мерч</a>
+                    </div>
+                    <div class="menu-search">
+                         {% if request.user.is_authenticated %}<a href="{% url 'profile' %}" class="menu__link">Профиль</a>
+                                                              <a href="{% url 'logout' %}" class="menu__link">Выйти</a>
+                                                    {% else %}<a href="{% url 'login' %}" class="menu__link">Войти</a>{% endif %}
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+                <div class="hero">
+                    <div class="container">
+                        <h1 class="hero__title">{{article.title}}</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <section class="section smi">
+        <div class="container">
+            <div class="smi-wrap">
+                <div class="smi-content">
+
+                    <div class="smi-item">
+                        <div class="smi-item__text">
+                            <p>{{article.preview_text}}</p>
+                        </div>
+                        </br>
+                        <div class="smi-item__img">
+                            <img src="{{MEDIA_URL}}{{article.preview_img}}" alt="">
+                        </div>
+                        <div class="smi-item__text">
+                            {{article.text|safe}}
+                        </div>
+
+                        {% for index in article.parts|get_range %}
+                            {% for header in headers %}
+                                {% if index == header.position%}
+                                    <h3>{{header.text}}</h3>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for paragraph in paragraphs %}
+                                {% if index == paragraph.position%}
+                                    <p>{{paragraph.text}}</p>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for image in images %}
+                                {% if index == image.position%}
+                                    <image src="{{MEDIA_URL}}{{image.image}}"></image>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for quote in quotes %}
+                                {% if index == quote.position%}
+                                    <p><i>{{quote.quote}}</i></p>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for video in videos %}
+                                {% if index == video.position%}
+
+                                    <iframe width="800px" height="500px" src="{{video.link}}"
+                                        frameborder="0"
+                                        allow="accelerometer; encrypted-media;  picture-in-picture"
+                                        allowfullscreen>
+                                    </iframe>
+                                {% endif %}
+                            {% endfor %}
+                            
+                        {% endfor %}                         
+                    </div>
+                </div>
+                <div class="smi-sidebar">
+                    <section class="smi-news">
+                        {% for item in news%}
+                            <div class="smi-news__item">
+                                <div class="smi-news__date">{{item.news_date}}</div>
+                                <div class="smi-news__text"><a href="{% url 'news-media' item.id %}">{{item.news_header}}</a></div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                    <div class="section smi-menu">
+                        <div class="smi-menu__wrap">
+                            <ul class="smi-menu__list">
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.0.section_name_eng 'none' %}"><i class="fa fa-file-text-o"
+                                            aria-hidden="true"></i>{{sections.0.section_name}}<span>{{sections.0.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.1.section_name_eng 'none' %}"><i class="fa fa-check-square-o"
+                                            aria-hidden="true"></i>{{sections.1.section_name}}<span>{{sections.1.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.2.section_name_eng 'none' %}"><i class="fa fa-lightbulb-o"
+                                            aria-hidden="true"></i>{{sections.2.section_name}}<span>{{sections.2.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.3.section_name_eng 'none' %}"><i class="fa fa-address-book-o"
+                                            aria-hidden="true"></i>{{sections.3.section_name}}<span>{{sections.3.article_set.count}}</span></a></li>
+                                <li class="smi-menu__items"><a href="{% url 'index-media' sections.4.section_name_eng 'none' %}"><i class="fa fa-hashtag"
+                                            aria-hidden="true"></i>{{sections.4.section_name}}<span>{{sections.4.article_set.count}}</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section smi-tags">
+                        <div class="smi-tags__wrap">
+                            {% for tag in tags %}
+                                <a href="{% url 'index-media' url_section tag.id %}" class="smi-tags__item">{{tag.tag_name}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

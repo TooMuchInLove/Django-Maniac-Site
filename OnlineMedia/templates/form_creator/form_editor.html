@@ -1,0 +1,181 @@
+{% extends "form_creator/form_wrapper.html"%}
+{% load static %}
+{% block content %}
+<h1>Редактирование статьи</h1>
+</br>
+    <Form method = "POST"  action="{% url 'form-edit-post' project.id id_article %}" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="input-group">
+            <div fieldWrapper id="list-elements">
+                <div style = "float:right; margin-right:300px;">
+                    <h2>Теги</h2>
+                    {% for tag in tags %}
+                        {% if tag in article_tags %}
+                            <input type="checkbox" name="tag" value="{{tag.tag_name}}" checked> {{tag.tag_name}}<br>
+                        {% else %}
+                            <input type="checkbox" name="tag" value="{{tag.tag_name}}" > {{tag.tag_name}}<br>
+                        {% endif %}
+                    {% endfor %}
+                </div>            
+                <h3>Категория</h3>
+                <ul id="id_category">
+                    {% for section in sections %}
+                        {% if article_section.id == section.id %}
+                            <li><label for="id_category_{{ forloop.counter }}"><input type="radio" name="category" value="{{section.section_name_eng}}" required="" id="id_category_{{ forloop.counter }}" checked>{{section.section_name}}</label>
+                        {% else %}
+                            <li><label for="id_category_{{ forloop.counter }}"><input type="radio" name="category" value="{{section.section_name_eng}}" required="" id="id_category_{{ forloop.counter }}">{{section.section_name}}</label>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+                <br/>
+
+                <h3>Название статьи</h3>
+                <input name="title" value="{{article.title}}" type = "input" class = "form-control mb-2 mr-sm-2" id ="inlineFormInputName2" style = "width: 600px;" placeholder = "Заголовок статьи"> </input>
+                <br/>
+                <h3>Изображение статьи</h3>
+                <img width="*" height="300px" src="{{MEDIA_URL}}{{article.preview_img}}"> </img>
+                </br>
+                <input type="file" name="first_image" class="" id="inlineFormInputName2" placeholder="Изображение" accept="first_image/*" > </input>
+                <br/>
+                <br/>
+                <h3>Описание</h3>
+                <textarea name="preview_text" cols="100" rows="3" type="text" class="form-control" id="inlineFormInputName2" placeholder="Описание" style="resize: none;" maxlength="300" required="">{{article.preview_text}}</textarea>
+                <br/>
+                <h3>Содержимое</h3>
+                <textarea name="text" cols="180" rows="10" type="text" class="form-control" id="inlineFormInputName2" placeholder="Абзац" style="resize: none;" maxlength="1000" required="">{{article.text}}</textarea>
+
+                {% for index in article.parts|get_range %}
+                    {% for header in article_headers %}
+                        {% if index == header.position%}
+                            <div name="module={{header.position}}.header">
+                                <br/>
+                                <br/>
+                                Заголовок
+                                <br/>
+                                <input value="{{header.text}}" type="input" name="{{header.position}}.header" class="form-control mb-2 mr-sm-2 {{header.position}}.header" id="inlineFormInputName2" style="width: 600px;" placeholder="Заголовок" maxlength="200" required="">
+                                <button class="btn btn-danger" onclick = "destroy_object('module={{header.position}}.header');" >Удалить элемент</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for paragraph in article_paragraphs %}
+                        {% if index == paragraph.position%}
+                            <div name="module={{paragraph.position}}.paragraph">
+                                <br/>
+                                <br/>
+                                Абзац
+                                <br/>
+                                <textarea name="{{paragraph.position}}.paragraph" cols="40" rows="10" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" style="resize: none;" placeholder="Абзац" maxlength="200" required="">{{paragraph.text}}</textarea>
+                                <button class="btn btn-danger" onclick = "destroy_object('module={{paragraph.position}}.paragraph');" >Удалить элемент</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for image in article_images %}
+                        {% if index == image.position%}
+                            <div name="module={{image.position}}.image">
+                                <br/>
+                                <br/>
+                                Изображение
+                                <br/>
+                                <img width="*" height="300px" src="{{MEDIA_URL}}{{image.image}}"> </img>
+                                <br/>
+                                <input type="file" name="{{image.position}}.image" class="" id="inlineFormInputName2" placeholder="Изображение" accept="image/*" >
+                                <br/>
+                                <button class="btn btn-danger" onclick = "destroy_object('module={{image.position}}.image');" >Удалить элемент</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for quote in article_quotes %}
+                        {% if index == quote.position%}
+                            <div name="module={{quote.position}}.quote">
+                                <br/>
+                                <br/>
+                                Цитата
+                                <br/>
+                                <input value="{{quote.quote}}" type="input" name="{{quote.position}}.quote" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" style="width: 1000px;" placeholder="Цитата" maxlength="200" required="">
+                                <button class="btn btn-danger" onclick = "destroy_object('module={{quote.position}}.quote');" >Удалить элемент</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for video in article_videos %}
+                        {% if index == video.position%}
+
+
+                            <div name="module={{video.position}}.video">
+                                <br/>
+                                <br/>
+                                Видео
+                                <br/>
+                                <iframe width="500" height="300px" src="{{video.link}}"
+                                    frameborder="0"
+                                    allow="accelerometer; encrypted-media;  picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                                <br/>
+                                <br/>
+                                <input value="{{video.link}}" type="input" name="{{video.position}}.video" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" style="width: 1000px;" placeholder="Ссылка на видео" maxlength="200" required="">
+                                <button class="btn btn-danger" onclick = "destroy_object('module={{video.position}}.video');" >Удалить элемент</button>
+                            </div>
+                            <br/>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+
+        </div>
+        <br/>
+        <div id="loading">
+            <a class="p-link btn btn-warning" href="?upload=1&position=0">Добавить Заголовок</a>
+            <a class="p-link btn btn-warning" href="?upload=2&position=0">Добавить Абзац</a> 
+            <a class="p-link btn btn-warning" href="?upload=3&position=0">Добавить Изображение</a>
+            <a class="p-link btn btn-warning" href="?upload=4&position=0">Добавить Цитату</a>
+            <a class="p-link btn btn-warning" href="?upload=5&position=0">Добавить Видео</a>
+        </div>
+        <br/>
+        <br/>
+        <button class="btn btn-success" type="submit">Отправить</button>
+    </Form>
+
+
+    <script type="text/javascript">
+
+        function ajax_pagination() {
+        $('#loading a.p-link').each((index, elem) => {
+        $(elem).click((e) => {
+        e.preventDefault() // Останавливаем событие
+        let page_url = $(elem).attr('href')
+
+        $.ajax({
+        url: page_url,
+        type: 'GET',
+        success: (data) => {
+        //$('#list-elements').empty()
+        $('#list-elements').append($(data).find('#uploading').html())
+
+        $('#loading').empty()
+        $('#loading').append($(data).find('#loading').html())        
+        }
+        })
+        })
+        })
+        }
+
+        $(document).ready(function() {
+            ajax_pagination()
+        })
+
+        $(document).ajaxStop(function() {
+            ajax_pagination()
+        })         
+
+        function destroy_object(name){
+            $("div[name='" + name + "']").remove();
+        }
+    </script>
+
+{% endblock %}
