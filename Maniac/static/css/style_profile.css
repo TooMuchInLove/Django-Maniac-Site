@@ -1,0 +1,265 @@
+/* Profile container */
+.profile {
+  font-family: 'Roboto', sans-serif;
+  background-color: #0F0E0C;
+  margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.profile-userpic{
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+}
+
+.profile-userpic img {
+  height: 100%;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+ /* -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;*/
+}
+
+.profile-usertitle {
+  text-align: center;
+  /*margin-top: 10px;*/
+  padding-top: 20px;
+}
+
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+  /*text-transform: uppercase;*/
+  color: #8a96a1;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  color:#8a96a1;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-userbuttons p{
+    color:#8a96a1;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.settings {
+  margin-top: 30px;
+  color: red;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #93a3b5;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+  border-radius: 10px;
+  color: #82848e;
+  padding: 40px;
+  background: #fff;
+  min-height: 460px;
+}
+
+body input{
+    color: black;
+}
+
+.profile-projects{
+    color: black
+}
+
+.profile-sidebar-top{
+    position: relative;
+    padding: 17px 20px 7px;
+    text-align: center;
+    font-size: 14px;
+}
+button{
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    font-size: 17px;
+}
+.profile-content button a{
+    color: #fff;
+}
+
+button:hover{
+    background-color: #49a2bc;
+}
+
+button a:hover{
+    text-decoration: none;
+    background-color: #49a2bc;
+    color: #fff;
+}
+
+.btn{
+    font-size: 15px;
+}
+
+.smi-content label{
+    font-size: 16px;
+}
+
+.profile-content{
+    font-size: 18px;
+}
+
+.profile-content p{
+    text-indent: 0px;
+}
+
+.profile-content h1{
+    color: #0c2037;
+    font-weight: 800px;
+    text-align: center;
+    font-size: 35px;
+}
+
+.username{
+    color: #cbd1d8;
+    font-size: 16px;
+}
+/*
+.article_in_profile{
+
+}
+.article_in_profile p{
+   display: inline-block;
+   align: right;
+}
+.article_in_profile img{
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+}*/
+.article_in_profile{
+    margin-bottom: 20px;
+}
+.article_in_profile img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+.article_in_profile_img{
+  display: inline-block;
+  vertical-align: top;
+  height: 100px;
+  width: 100px;
+  min-height: 50px;
+  min-width: 50px;
+  margin-right: 15px;
+}
+
+.article_in_profile_text{
+  display: inline-block;
+  max-height: 200px;
+  min-width: 100px;
+  max-width: 525px;
+}
+
+.profile-content a{
+    color: #5a7391;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.user_img{
+  display: inline-block;
+  vertical-align: top;
+  height: 50px;
+  width: 50px;
+  min-height: 30px;
+  min-width: 30px;
+  margin-right: 15px;
+}
+
+.user_img img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+

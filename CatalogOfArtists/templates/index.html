@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+
+{% load my_filter %}
+{% load static %}
+
+{% block title %}Каталог артистов | RS{% endblock %}
+
+{% block search %}
+  <h1 class="hero__title">Каталог артистов<br><span>&laquo;Rock Stars&raquo;</span></h1>
+  <h3 class="hero__subtitle">Музыкальные коллективы и&nbsp;артисты в&nbsp;жанре тяжелой музыки
+      из&nbsp;России</h3>
+{% endblock %}
+
+{% block content %}
+<section class="section stylelist">
+        <div class="container">
+            <div class="stylelist__wrapper">
+                <div class="stylelist__listblock">
+                    <ul class="stylelist__list">
+                    {% for genre in genre %}
+                        <li><a href="{% url 'genre-detail' genre.id %}">{{ genre.GenreName }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+<section class="section stylelist">
+        <div class="container">
+            <div class="stylelist__wrapper">
+                <div class="stylelist__listblock">
+                    <ul class="stylelist__list">
+                    {% if artist %}
+                        {% for letter in var %}
+                            <h4><strong>{{ letter }}</strong></h4>
+                            {% for artist in artist %}
+                                {% if artist.name|filter_a:letter == '+' %}
+                                <a href="{% url 'artist-card' artist.id %}">{{ artist.name }}</a> <br>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        <p>Артистов в базе нет</p>
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section class="section mc">
+        <div class="container">
+            <h3>Новое в каталоге</h3>
+            <div class="mc__wrapper">
+                {% for artist in artist %}
+                <div class="mc__column">
+                    <a href="{% url 'artist-card' artist.id %}" class="mc__link">
+                        <div class="mc__item">
+                            <div class="mc__cover">
+                                <img src="{{ MEDIA_URL }}{{ artist.image }}" alt="">
+                                <span class="mc__title">
+                                    {{ artist.name }}
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

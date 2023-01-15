@@ -1,0 +1,15 @@
+{% extends "project/profile_project_base.html" %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block profile-content %}
+    <h1>Добавить участника в проект</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form_user_choice.as_p }}
+        <p>{{ message }}</p>
+        <p><input type="submit" class="btn btn-info" value="Пригласить"></p>
+    </form>
+{% endblock %}
+
+# здесь можно вывести уже отправленные приглашения

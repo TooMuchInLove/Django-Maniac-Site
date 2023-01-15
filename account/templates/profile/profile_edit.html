@@ -1,0 +1,33 @@
+{% extends "profile/profile_base.html" %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block profile-content %}
+    <h1>Настройки</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+<!--         {% for field in user_form %}-->
+<!--        <div class="row">-->
+<!--            {{field.label_tag}}-->
+<!--            <div class="col-md-12">{{field}}</div>-->
+<!--            {% if field.errors%}-->
+<!--            <div class="error">{{field.errors}}</div>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        {% endfor %}-->
+        {{ user_form.as_p }}
+<!--        {% for field in profile_form %}-->
+<!--        <div class="row">-->
+<!--            {{field.label_tag}}-->
+<!--            <div class="col-md-12">{{field}}</div>-->
+<!--            {% if field.errors%}-->
+<!--            <div class="error">{{field.errors}}</div>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        {% endfor %}-->
+        {{ profile_form.as_p }}
+        <p><input type="submit" class="btn btn-info" value="Редактировать"></p>
+    </form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "account/base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+    <div class="col-md-12 text-center">
+    <h1>Вход на сайт</h1>
+    {% if form.errors %}
+        <p>
+            Ваш логин и пароль не совпадают.
+            Попробуйте снова.
+        </p>
+    {% else %}
+    {% endif %}
+    <div class="login-form">
+        <form action="{% url 'login' %}" method="post">
+            {% for field in form %}
+        <div class="row">
+            {{field.label_tag}}
+            <div class="col-md-12">{{field}}</div>
+            {% if field.errors%}
+            <div class="error">{{field.errors}}</div>
+            {% endif %}
+        </div>
+        <br>
+        {% endfor %}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <p><input type="submit" class="btn btn-info" value="Войти"></p>
+        </form>
+    </div>
+        Если у вас нет аккаунта, вы можете
+        <a href="{% url 'register' %}">Зарегистрироваться</a>
+    </div>
+{% endblock %}

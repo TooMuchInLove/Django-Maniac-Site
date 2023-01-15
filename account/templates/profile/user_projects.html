@@ -1,0 +1,29 @@
+{% extends "profile/profile_base.html" %}
+
+{% block profile-content %}
+{% load static %}
+
+    <h1>Компании пользователя</h1><br/>
+    {% for project in projects %}
+        <div class="article_in_profile ">
+        <div class="user_img">
+            {% if project.image %}
+                <img  src="{{project.image.url}}" alt="">
+            {% else %}
+                <img src="{% static 'img/profile/base_project_photo.png' %}" class="img-responsive" alt="">
+            {% endif %}
+        </div>
+        <div class="article_in_profile_text">
+            <a href="{% url 'project_blog' pk=project.id %}">{{project.name}}</a><span> (подписчиков:{{project.project_following.count}})</span>
+            <div>{{project.description}}</div>
+        </div>
+    </div>
+    {% endfor%}<br/>
+    <div class="text-center">
+    {% if user1 == request.user %}
+        <a href="{% url 'project-register' %}"><button class="btn btn-info ">Создать новый проект</button></a>
+    {% endif %}
+    </div>
+{% endblock %}
+
+# сделать проверку где создатель а где участник(во вьюхе)

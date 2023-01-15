@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}Main{% endblock %}</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Scada:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block link %}{% endblock%}
+    <script src="https://use.fontawesome.com/ecc41221c2.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+
+</head>
+<body>
+<!--    <div id="header">-->
+<!--        <nav class="navbar navbar-inverse" role="navigation">-->
+<!--            <li>fgerg</li>-->
+<!--            <li>erger</li>-->
+<!--            <li>ergr</li>-->
+<!--        </nav>-->
+<!--    </div>-->
+    <header class="header">
+        <div class="adv">
+            <div class="container">
+                <div class="adv-wrap">
+                    <div class="logo logo__img">
+                        <img src="/static/logo-white.png" alt="">
+                    </div>
+                    <div class="banner banner__img">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- /.adv -->
+        <div class="navbar"></div>
+        <!-- /.navbar -->
+        <section class="section menu">
+            <div class="container">
+                <div class="menu-wrap" >
+                    <div class="menu-nav">
+                        <a href="#" class="menu__link">Маркетплейс</a>
+                        <a href="#" class="menu__link">Каталог артистов</a>
+                        <a href="#" class="menu__link">Статьи</a>
+                        <a href="#" class="menu__link">Афиша</a>
+                        <a href="#" class="menu__link">Мерч</a>
+                    </div>
+                    <div class="menu-search">
+                        {% if request.user.is_authenticated %}<a href="{% url 'project-register' %}" class="menu__link">Добавить проект</a>{% endif %}
+                        {% if request.user.is_authenticated %}<a href="{% url 'logout' %}" class="menu__link">Выйти</a>
+                                                    {% else %}<a href="{% url 'login' %}" class="menu__link">Войти</a>{% endif %}
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+                <div class="hero"></div>
+            </div>
+        </section>
+    </header>
+
+  <div class="content">
+
+       <section class="section smi">
+        <div class="container">
+            <div class="smi-wrap">
+                <div class="smi-content">
+                    {% block content %}
+                    <div id="header">
+<!--            <span class="user">-->
+<!--        {% if request.user.is_authenticated %}-->
+<!--            Hello {{ request.user}},-->
+<!--            <a href="{% url 'logout' %}">Выход</a>-->
+<!--        {% else %}-->
+<!--            <a href="{% url 'login' %}">Вход</a>-->
+<!--        {% endif %}-->
+<!--    </span>-->
+        </div>
+
+                    <div class="smi-item">
+
+                        <div class="smi-item__header">
+                            <div class="smi-item__date">25 марта 2020</div>
+                            <div class="smi-item__author">
+                                <div class="smi-item__avatar">
+                                    <img src="img/MMG_avatar.jpg" alt="" class="smi-item__avaimg">
+                                </div>
+                                <a href="#" class="smi-item__link">Rock Stars</a>
+                            </div>
+                        </div>
+                        <div class="smi-item__preview">
+                            <div class="smi-item__title">
+                                <a href="smi-detail.html" class="smi-item__titlelink">Музыканты группы
+                                    &laquo;HARDSTARS&raquo;
+                                    анонсировали новый альбом</a>
+                            </div>
+                            <div class="smi-item__text">
+                                <p>Rock Stars</p>
+                            </div>
+                        </div>
+                        <div class="smi-item__img">
+                            <a href="smi-detail.html" class="smi-item__link"></a>
+                        </div>
+                        <div class="smi-item__footer">
+                            <div class="smi-item__comments">
+                                <a href="#" class="smi-item__titlelink"><i class="fa fa-comments"></i> 46
+                                    комментариев</a>
+                            </div>
+                            <div class="smi-item__watchcounter">
+                                <p><i class="fa fa-eye"></i>198</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="smi-item">
+                        <div class="smi-item__header">
+                            <div class="smi-item__date">21 марта 2020</div>
+                            <div class="smi-item__author">
+                                <div class="smi-item__avatar">
+                                    <img src="img/MMG_avatar.jpg" alt="" class="smi-item__avaimg">
+                                </div>
+                                <a href="#" class="smi-item__link">Rock Stars</a>
+                            </div>
+                        </div>
+                        <div class="smi-item__preview">
+                            <div class="smi-item__title">
+                                <a href="smi-detail.html" class="smi-item__titlelink">Avenged Sevenfold запустили крутой
+                                    конкурс для
+                                    самоизолированных фанатов</a>
+                            </div>
+                            <div class="smi-item__text">
+                                <p>Avenged Sevenfold запустили конкурс для тех, кто находится в&nbsp;самоизоляции.
+                                    Победители получат мерч группы бесплатно. Получить заветный мерч в&nbsp;ближайшее
+                                    время можно будет только таким образом. Avenged Sevenfold временно приостановили
+                                    онлайн-заказы и&nbsp;доставку.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="smi-item__img">
+                            <a href="smi-detail.html" class="smi-item__link">
+                                <img src="img/avenged-sevenfold-band.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="smi-item__footer">
+                            <div class="smi-item__comments">
+                                <a href="#" class="smi-item__titlelink"><i class="fa fa-comments"></i> 23
+                                    комментария</a>
+                            </div>
+                            <div class="smi-item__watchcounter">
+                                <p><i class="fa fa-eye"></i>255</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="smi-sidebar">
+                    <section class="smi-news">
+                        <div class="smi-news__item">
+                            <div class="smi-news__date">18.03.2020</div>
+                            <div class="smi-news__text"><a href="#">Lindemann проведут 2&nbsp;концерта в&nbsp;Москве
+                                    в&nbsp;один день из-за запрета мэра</a></div>
+                        </div>
+                        <div class="smi-news__item">
+                            <div class="smi-news__date">15.03.2020</div>
+                            <div class="smi-news__text"><a href="#">Shinedown выпустили неизданную песню Atlas
+                                    Falls</a></div>
+                        </div>
+                        <div class="smi-news__item">
+                            <div class="smi-news__date">13.03.2020</div>
+                            <div class="smi-news__text"><a href="#">Jinjer анонсировали концерты в&nbsp;России</a>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="section smi-menu">
+                        <div class="smi-menu__wrap">
+                            <ul class="smi-menu__list">
+                                <li class="smi-menu__items"><a href="#"><i class="fa fa-file-text-o"
+                                            aria-hidden="true"></i>Статьи<span>46</span></a></li>
+                                <li class="smi-menu__items"><a href="#"><i class="fa fa-check-square-o"
+                                            aria-hidden="true"></i>События<span>156</span></a></li>
+                                <li class="smi-menu__items"><a href="#"><i class="fa fa-lightbulb-o"
+                                            aria-hidden="true"></i>Маркетинг<span>208</span></a></li>
+                                <li class="smi-menu__items"><a href="#"><i class="fa fa-address-book-o"
+                                            aria-hidden="true"></i>Авторские материалы<span>11</span></a></li>
+                                <li class="smi-menu__items"><a href="#"><i class="fa fa-hashtag"
+                                            aria-hidden="true"></i>История рока<span>5</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section smi-tags">
+                        <div class="smi-tags__wrap">
+                            <a href="#" class="smi-tags__item">Item1</a>
+                            <a href="#" class="smi-tags__item">Item2</a>
+                            <a href="#" class="smi-tags__item">Item3 Item1</a>
+                            <a href="#" class="smi-tags__item">Облако</a>
+                            <a href="#" class="smi-tags__item">Теги</a>
+                            <a href="#" class="smi-tags__item">Еще</a>
+                            <a href="#" class="smi-tags__item">Дополнительно</a>
+                            <a href="#" class="smi-tags__item">Еще tags</a>
+                            <a href="#" class="smi-tags__item">Два слова</a>
+                            <a href="#" class="smi-tags__item">Даже три слова</a>
+                            <a href="#" class="smi-tags__item">Неимоверно огромный тег</a>
+                            <a href="#" class="smi-tags__item">Music</a>
+                            <a href="#" class="smi-tags__item">Alternative metal</a>
+                            <a href="#" class="smi-tags__item">HARDSTARS</a>
+                        </div>
+
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+  </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-wrap">
+                <div class="footer__logo">
+                    <img src="img/logo-white.png" alt="" class="logo__img">
+                </div>
+                <div class="footer__about">&copy;&nbsp;rockstars</div>
+                <div class="footer__menu1">
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#">Маркетплейс</a></li>
+                        <li class="footer__item"><a href="#">Каталог артистов</a></li>
+                        <li class="footer__item"><a href="#">Статьи</a></li>
+                    </ul>
+                </div>
+                <div class="footer__menu2">
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#">Афиша</a></li>
+                        <li class="footer__item"><a href="#">Мерч</a></li>
+                    </ul>
+                </div>
+                <div class="footer__menu3">
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#">О проекте</a></li>
+                        <li class="footer__item"><a href="#">Прислать статью</a></li>
+                        <li class="footer__item"><a href="#">Реклама на сайте</a></li>
+                    </ul>
+                </div>
+                <div class="footer__sociallinks">
+                    <a href="#"><i class="fa fa-vk" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

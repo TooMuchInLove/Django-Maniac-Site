@@ -1,0 +1,28 @@
+{% extends "project/profile_project_base.html" %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block profile-content %}
+{% load static %}
+    <h1>Подписчики</h1>
+    {% for follower in followers %}
+
+    <div class="article_in_profile">
+        <div class="user_img">
+            {% if follower.image %}
+                <img  src="{{follower.image.url}}" alt="">
+            {% else %}
+                <img src="{% static 'img/profile/base_user_photo.png' %}" class="img-responsive" alt="">
+            {% endif %}
+        </div>
+        <div class="article_in_profile_text">
+            <a href="{% url 'profile_pk' pk=follower.user.id %}">{{follower.user.first_name}}</a>
+            <div>{{follower.user.username}}</div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+
+
+{% endblock %}

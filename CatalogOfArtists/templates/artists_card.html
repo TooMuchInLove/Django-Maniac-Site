@@ -1,0 +1,259 @@
+{% extends 'main.html' %}
+
+{% load static %}
+{% load embed_video_tags %}
+
+{% block title %}{{ artist.name }} | RS{% endblock %}
+
+{% block search %}
+{% endblock %}
+
+{% block content %}
+<section class="ac-header">
+    <div class="container-fullscreen">
+        <div class="ac-header__cover">
+            <img src="{{ MEDIA_URL }}{{ artist.image }}" alt="" class="ac-header__img">
+            <div class="ac-header__header">
+                <div class="ac-header__name">
+                    <h1>{{ artist.name }}</h1>
+                    <span class="ac-header__style">
+                        {{ artist.main_genre }}
+                    </span>
+                </div>
+                <div class="ac-header__info">
+                    {% if artist.year_of_found != None %}
+                    <div class="ac-header__date">
+                        Дата основания: {{ artist.year_of_found }}
+                    </div>
+                    {% endif %}
+                    <div class="ac-header__city">
+                        {{ artist.city }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="section ac">
+    <div class="container">
+        <div class="ac__wrapper">
+            <div class="ac__content">
+                <div class="ac__text">
+                    {{ artist.text|safe }}
+                </div>
+                <div class="ac__albums">
+                    <h3>Официальные релизы</h3>
+                    <div class="ac__albums-wrapper">
+                        {% for relase in artist.relase_set.all|dictsortreversed:'age' %}
+                        <div class="ac__albums-column">
+                            <div class="ac__albums-item">
+                                <div class="ac__albums-cover">
+                                    <img src="{{ MEDIA_URL }}{{ relase.image }}" alt="">
+                                </div>
+                                <div class="ac__albums-title">
+                                    {{ relase.name }}
+                                </div>
+                                <div class="ac__albums-date">
+                                    {{ relase.age }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <div id="lightgallery" >
+                    {% for image in gallery %}
+                        <div style="display: inline-block; margin-right: 1px;" data-src="{{ MEDIA_URL }}{{ image.image }}">
+                            <a href="">
+                                <img width="200" class="img-responsive" src="{{ MEDIA_URL }}{{ image.image }}" alt="">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="ac__video">
+                    <h3>Видеозаписи</h3>
+                    <div class="ac__video-wrapper">
+                        {% for video in videos %}
+                        <div class="ac__video-column">
+                            <div class="ac__video-item">
+                                <iframe width="100%" height="250" src="{{ video.link }}"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="ac__concerts">
+                    <h3>Предстоящие концерты</h3>
+                    <div class="ac__concerts-wrapper">
+                        {% for poster in posters %}
+                            <div class="ac__concerts-column">
+                                <div class="ac__concerts-item">
+                                    <img src="{{ MEDIA_URL }}{{ poster.image }}" alt="">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="ac__sidebar">
+                <div class="ac__team ac__sidebarblock">
+                    <h3>Состав группы</h3>
+                    {% for member in artist.group_members_set.all %}
+                    <div class="ac__team-member">
+                        <div class="ac__team-name">
+                            {{ member.name }}
+                        </div>
+                        <div class="ac__team-role">
+                            {{ member.role }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="ac__team ac__sidebarblock">
+                    <h3>Менеджмент</h3>
+                    <div class="ac__team-member">
+                        <div class="ac__team-name">
+                            {{ artist.LPRname }}
+                        </div>
+                        <div class="ac__team-role">
+                            {{ artist.role }}
+                        </div>
+                    </div>
+                    <div class="ac__team-phone">
+                        {{ artist.LPRphone }}
+                    </div>
+                    <div class="ac__team-link">
+                        <a href="{{ artist.LPRlinkvk }}" target="_blank"> {{ artist.LPRlinkvk  }} </a>
+                    </div>
+                    <div class="ac__team-email">
+                        {{ artist.LPRemail  }}
+                    </div>
+                    <br>
+                    {% for manage in artist.management_set.all %}
+                    <div class="ac__team-member">
+                        <div class="ac__team-name">
+                            {{ manage.LPRname }}
+                        </div>
+                        <div class="ac__team-role">
+                            {{ manage.role }}
+                        </div>
+                    </div>
+                    <div class="ac__team-phone">
+                        {{ manage.LPRphone }}
+                    </div>
+                    <div class="ac__team-link">
+                        <a href="{{ artist.LPRlink }}" target="_blank"> {{ manage.LPRlink  }} </a>
+                    </div>
+                    <div class="ac__team-email">
+                        {{ manage.LPRemail  }}
+                    </div>
+                    <br>
+                    {% endfor %}
+
+                    {% if artist.feedback %}
+                    <div class="ac__form form">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                                <div class="ac__form-element">
+                                    {{ form.topic }}
+                                </div>
+                                <div class="ac__form-element">
+                                    {{ form.email }}
+                                </div>
+                                <div class="ac__form-element">
+                                    {{ form.text }}
+                                </div>
+                            <input type="submit" class="ac__form-button" value="Отправить">
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="ac__links ac__sidebarblock">
+                    <h3>Слушать музыку</h3>
+                    <ul class="ac__links-list">
+                        {% if artist.linkYandexM != "" %}
+                            <li><a href="{{ artist.linkYandexM }}">Яндекс музыка</a></li>
+                        {% endif %}
+                        {% if artist.linkGoogleP != "" %}
+                            <li><a href="{{ artist.linkGoogleP }}">Goggle Music</a></li>
+                        {% endif %}
+                        {% if artist.linkAppleM != "" %}
+                            <li><a href="{{ artist.linkAppleM }}">Apple Music</a></li>
+                        {% endif %}
+                        {% if artist.linkYoutubeM != "" %}
+                            <li><a href="{{ artist.linkYoutubeM }}">Youtube Music</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if not flaglink %}
+                <div class="ac__links ac__sidebarblock">
+                    <h3>Ссылки</h3>
+                    {% if artist.linksite != "" %}
+                        <div class="ac__links-element">
+                            <div class="ac__links-icon">
+                                <i class="fa fa-globe"></i>
+                            </div>
+                            <div class="ac__links-title">
+                                <a href="{{ artist.linksite }}" target="_blank">Сайт {{ artist.name }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if artist.linkvk != "" %}
+                    <div class="ac__links-element">
+                        <div class="ac__links-icon">
+                            <i class="fa fa-vk"></i>
+                        </div>
+                        <div class="ac__links-title">
+                            <a href="{{ artist.linkvk }}" target="_blank">Группа ВКонтакте</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if artist.linkyoutube != "" %}
+                    <div class="ac__links-element">
+                        <div class="ac__links-icon">
+                            <i class="fa fa-youtube"></i>
+                        </div>
+                        <div class="ac__links-title">
+                            <a href="{{ artist.linkyoutube }}" target="_blank">Канал
+                                на Youtube</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if artist.linkinsta != "" %}
+                    <div class="ac__links-element">
+                        <div class="ac__links-icon">
+                            <i class="fa fa-instagram"></i>
+                        </div>
+                        <div class="ac__links-title">
+                            <a href="{{ artist.linkinsta  }}"
+                                target="_blank">Instagram-аккаунт</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if artist.linkfacebook != "" %}
+                    <div class="ac__links-element">
+                        <div class="ac__links-icon">
+                            <i class="fa fa-facebook"></i>
+                        </div>
+                        <div class="ac__links-title">
+                            <a href="{{ artist.linkfacebook }}" target="_blank">Facebook</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

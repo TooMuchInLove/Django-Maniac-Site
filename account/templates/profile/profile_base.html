@@ -1,0 +1,104 @@
+{% extends "account/base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-4">
+			<div class="profile-sidebar">
+				<div class="profile-sidebar-top">
+					<!-- SIDEBAR USERPIC -->
+					<div class="profile-userpic">
+						{% if user1.userprofile.image %}
+							<img src="{{ user1.userprofile.image.url}}" class="img-responsive" alt="">
+						{% else %}
+							<img src="{% static 'img/profile/base_user_photo.png' %}" class="img-responsive" alt="">
+						{% endif %}
+					</div>
+					<!-- END SIDEBAR USERPIC -->
+					<!-- SIDEBAR USER TITLE -->
+					<div class="profile-usertitle">
+						<div class="profile-usertitle-name">
+							<div>{{user1.first_name}}</div>
+							<div class="profile-usertitle-name username">{{user1.username}}</div>
+						</div>
+						<div class="profile-usertitle-job">
+							{{user1.last_login}}
+						</div>
+					</div>
+					<!-- END SIDEBAR USER TITLE -->
+					<!-- SIDEBAR BUTTONS -->
+					{% if request.user == user1 %}
+					<div class="profile-usertitle-job">Ваш профиль</div>
+					{% else %}
+						<div class="profile-userbuttons">
+							{% if user1.userprofile in request.user.userprofile.user_followed.all %}
+								<a href="{% url 'change_subscription' model='User' operation='remove' pk=user1.id %}"><button class="btn btn-info ">Отписаться</button></a>
+							{% else %}
+								<a href="{% url 'change_subscription' model='User' operation='add' pk=user1.id %}"><button class="btn btn-success ">Подписаться</button></a>
+							{% endif %}
+						</div>
+					{% endif %}
+				</div>
+				<!-- END SIDEBAR BUTTONS -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li {% if userprojects %} class="active" {% endif %}>
+							<a href="{% url 'profile_projects' pk=user1.id %}">
+							<i class="glyphicon glyphicon-star"></i>
+							Проекты </a>
+						</li>
+<!--						<li {% if comments %} class="active" {% endif %}>-->
+<!--							<a href="">-->
+<!--							<i class="glyphicon glyphicon-comment"></i>-->
+<!--							Комментарии </a>-->
+<!--						</li>-->
+						<li {% if subscriptions %} class="active" {% endif %}>
+							<a href="{% url 'profile_subscriptions' pk=user1.id %}">
+							<i class="glyphicon glyphicon-user"></i>
+							Подписки </a>
+						</li>
+						{% if request.user == user1 %}
+						<li {% if notifications %} class="active" {% endif %}>
+							<a href="{% url 'profile_notifications' %}">
+							<i class="glyphicon  glyphicon-bell"></i>
+							Уведомления ({{ message_count }})	</a>
+						</li>
+						<li {% if settings %} class="active" {% endif %}>
+							<a href="{% url 'profile_edit' %}">
+							<i class="glyphicon glyphicon-edit"></i>
+							Настройки </a>
+						</li>
+						<li {% if password %} class="active" {% endif %}>
+							<a href="{% url 'edit_password' %}">
+							<i class="glyphicon glyphicon-wrench"></i>
+							Изменить пароль </a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+<!--				<div class="profile-projects">-->
+<!--					<p>Проекты:</p>-->
+<!--					<ul class="nav">-->
+<!--						<li>-->
+<!--							{% for project in projects %}-->
+<!--								<a href="{% url 'project_blog' pk=project.id %}"><p>{{project.name}}</p></a>-->
+<!--							{% endfor %}-->
+<!--						</li>-->
+<!--					</ul>-->
+<!--				</div>-->
+				<!-- END MENU -->
+			</div>
+		</div>
+		<div class="col-md-8">
+            <div class="profile-content">
+				{% block profile-content %}
+				{% endblock %}
+            </div>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+{% endblock %}

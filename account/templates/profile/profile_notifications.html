@@ -1,0 +1,12 @@
+{% extends "profile/profile_base.html" %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block profile-content %}
+    <h1>Уведомления </h1>
+    {% for invite in invitations%}
+    <p>Проект <strong><a href="{% url 'project_blog' pk=invite.sender.id %}">{{invite.sender }}</a></strong> приглашает вас в свою команду</p>
+        <a href="{% url 'answer_to_invite' operation='accept' pk=invite.id %}"><button class="btn btn-success">Согласиться</button></a>
+        <a href="{% url 'answer_to_invite' operation='refuse' pk=invite.id %}"><button class="btn btn-danger">Отказаться</button></a>
+    {% endfor %}
+{% endblock %}

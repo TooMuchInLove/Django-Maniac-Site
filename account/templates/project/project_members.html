@@ -1,0 +1,38 @@
+{% extends "project/profile_project_base.html" %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block profile-content %}
+{% load static %}
+    <h1>Команда</h1>
+    <p>Создатель:</p>
+     <div class="user_img">
+            {% if author.userprofile.image %}
+                <img  src="{{author.userprofile.image.url}}" alt="">
+            {% else %}
+                <img src="{% static 'img/profile/base_user_photo.png' %}" class="img-responsive" alt="">
+            {% endif %}
+        </div>
+        <div class="article_in_profile_text">
+            <a href="{% url 'profile_pk' pk=author.id %}">{{author.first_name}}</a>
+            <div>{{author.username}}</div>
+        </div><br/>
+
+    <br><p>Другие участники:</p>
+    {% for member in members %}
+    <div class="article_in_profile">
+        <div class="user_img">
+            {% if member.userprofile.image %}
+                <img  src="{{member.userprofile.image.url}}" alt="">
+            {% else %}
+                <img src="{% static 'img/profile/base_user_photo.png' %}" class="img-responsive" alt="">
+            {% endif %}
+        </div>
+        <div class="article_in_profile_text">
+            <a href="{% url 'profile_pk' pk=member.id %}">{{member.first_name}}</a>
+            <div>{{member.username}}</div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

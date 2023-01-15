@@ -1,0 +1,89 @@
+{% extends "account/base.html" %}
+{% block title %}Profile project{% endblock %}
+{% block content %}
+{% load static%}
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-4">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+					{% if project.image %}
+						<img src="{{ project.image.url}}" class="img-responsive" alt="">
+					{% else %}
+						<img src="{% static 'img/profile/base_project_photo.png' %}" class="img-responsive" alt="">
+					{% endif %}
+				</div>
+				<!-- END SIDEBAR USERPIC -->
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						{{project.name}}
+					</div>
+					<div class="profile-usertitle-job">
+						{{project.description}}
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR BUTTONS -->
+				<div class="profile-userbuttons">
+					<button type="button" class="btn btn-success btn-sm">Подписаться</button>
+				</div>
+				<!-- END SIDEBAR BUTTONS -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li {% if blog %} class="active" {% endif %}>
+							<a href="{% url 'project_blog' pk=project.id%}">
+							<i class="glyphicon glyphicon-list-alt"></i>
+							Блог </a>
+						</li>
+						<li {% if project_members %} class="active" {% endif %}>
+							<a href="{% url 'project_members' pk=project.id %}">
+							<i class="glyphicon glyphicon-user"></i>
+							Команда </a>
+						</li>
+						<li {% if subscriptions %} class="active" {% endif %}>
+							<a href="{% url 'project_followers' pk=project.id %}">
+							<i class="glyphicon glyphicon-ok"></i>
+							Подписчики </a>
+						</li>
+						{% if request.user == author %}
+						<li {% if settings %} class="active" {% endif %}>
+							<a href="{% url 'project_edit' pk=project.id %}">
+							<i class="glyphicon glyphicon-edit"></i>
+							Настройки </a>
+						</li>
+						<li {% if add_member %} class="active" {% endif %}>
+							<a href="{% url 'add_member' pk=project.id %}">
+							<i class="glyphicon glyphicon-plus"></i>
+							Добавить участника </a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+<!--				<div class="profile-projects">-->
+<!--					<ul class="nav">-->
+<!--						<li>Создатель:-->
+<!--							<a href="">{{ author.username }}</a>-->
+<!--							Другие участники:-->
+<!--							{% for member in members %}-->
+<!--								<a href=""><p>{{member.username}}</p></a>-->
+<!--							{% endfor %}-->
+<!--						</li>-->
+<!--					</ul>-->
+<!--				</div>-->
+				<!-- END MENU -->
+			</div>
+		</div>
+		<div class="col-md-8">
+            <div class="profile-content">
+				{% block profile-content %}
+				{% endblock %}
+            </div>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+{% endblock %}

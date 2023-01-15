@@ -1,0 +1,36 @@
+{% extends "project/profile_project_base.html" %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block profile-content %}
+    {% load static %}
+    <!-- <h1 class="text-center">Написать статью</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" class="btn btn-info" value="Опубликовать"></p>
+    </form>
+    <p>{{ message }}</p> -->
+    {% if showArticle == True %}
+        <a href="{% url 'form-publish' id_project=project.id %}"><button class="btn btn-info ">Написать статью</button></a>
+    {% endif %}
+    <h1 class="text-center">Статьи проекта</h1>
+    {% for article in articles %}
+    <div class="article_in_profile">
+        <div class="article_in_profile_img">
+            {% if article.preview_img %}
+                <img src="{{article.preview_img.url}}" alt="">
+            {% else %}
+                <img src="{% static 'img/profile/base_user_photo.png' %}" class="img-responsive" alt="">
+            {% endif %}
+        </div>
+        <div class="article_in_profile_text">
+            <a href="{% url 'detail-media' 'all' article.id %}">{{article.title}}</a>
+            <div>{{article.create_date}}</div>
+            <a href="{% url 'form-edit' id_project=project.id id_article=article.id %}"><button class="btn btn-warning">Редактировать</button></a>
+            <button class="btn btn-danger">Удалить</button>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}
