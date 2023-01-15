@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}Marketplace | RS{% endblock %}
+
+{% block search %}
+    <h1 class="hero__title">Маркетплейс<br><span>&laquo;Rock Stars&raquo;</span></h1>
+    <h3 class="hero__subtitle">Онлайн-каталог организаций и&nbsp;частных лиц, оказывающих требуемые
+        артистам услуги и&nbsp;предоставляющих концертные площадки</h3>
+    <div class="hero__search">
+        <form action="{% url 'search' %}" method="get" class="form hero__form">
+            <div class="form__row">
+                <div class="form__group">
+                    <div class="form__sector">
+                        <i class="fa fa-search"></i>
+                        <input name="name" type="text" class="input form__input" placeholder="Название...">
+                    </div>
+                </div>
+                <div class="form__group">
+                    <div class="form__sector form__sector-leftborder">
+                        <i class="fa fa-list"></i>
+                        <select name="cat" class="select form__select">
+                            <option value="">Все категории...</option>
+                            {% for category in categories|dictsort:'category_name' %}
+                                <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form__group">
+                    <div class="form__sector form__sector-leftborder">
+                        <i class="fa fa-map-marker"></i>
+                        <input name="city" type="text" class="input form__input" placeholder="Город...">
+                    </div>
+                </div>
+                <div class="form__group">
+                    <input name="search" type="submit" class="button form__button" value="Искать">
+<!--                    <input name="search1"  value="Поиск">-->
+<!--                    <a class="button form__button s-link" href="#">Поиск</a>-->
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <section class="section mp-categories">
+        <div class="container">
+            <div id="list-categories" class="mp-categories__wrapper">
+                {% for category in categories|dictsort:'category_name' %}
+                    <div class="mp-categories__column">
+                        <a href="{% url 'list-elements' category.id %}" class="mp-categories__link">
+                            <div class="mp-categories__item">
+                                <div class="mp-categories__icon">
+                                    <i class="fa fa-eye-slash"></i>
+                                </div>
+                                <div class="mp-categories__header">{{ category.category_name }}</div>
+                                <div class="mp-categories__counter">{{ category.element_set.count }}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

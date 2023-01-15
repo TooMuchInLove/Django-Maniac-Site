@@ -1,0 +1,100 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}{{ category.category_name }} | RS{% endblock %}
+
+{% block search %}<h1 class="hero__title">{{ category.category_name }}</h1>{% endblock %}
+
+{% block content %}
+    <section class="section mp-type">
+        <div class="container">
+            <div id="list-elements" class="mp-type__wrapper">
+                {% if elements %}
+                    {% for element in elements %}
+                        <div class="mp-type__column">
+                            <div class="mp-type__item">
+                                <div class="mp-type__media">
+                                    <a href="{% url 'info-element' element.id %}">
+                                        <img src="{{ MEDIA_URL }}{{ element.element_preview_img }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="mp-type__content">
+                                    <div class="mp-type__top">
+                                        {% for tag in element.tag_set.all %}
+                                            <div class="mp-type__tag">{{ tag.tag_name }}</div>
+                                        {% endfor %}
+                                        <div class="mp-type__city">{{ element.fk_city }}</div>
+                                    </div>
+                                    <div class="mp-type__header">
+                                        <a href="{% url 'info-element' element.id %}">{{ element.element_name }}</a>
+                                    </div>
+                                    <div class="mp-type__description">{{ element.element_preview_text }}</div>
+
+    <!--                                <form action="{% url 'list-elements' category.id %}" method="get" class="form hero__form">-->
+    <!--                                <form action="{% url 'get-rating' element.id %}" method="get" class="form hero__form">-->
+    <!--                                    <div class="mp-type__rating">-->
+    <!--&lt;!&ndash;                                        <i id="new-rating" class="fa fa-star">{{ element.rating }}</i>&ndash;&gt;-->
+    <!--                                        <i id="new-rating" class="fa fa-star">{{ element_r.rating }}</i>-->
+    <!--                                        <input name="rating" type="submit" class="fa fa-star">-->
+    <!--&lt;!&ndash;                                        <input name="name" class="fa fa-star" value="{{ element.element_name }}">&ndash;&gt;-->
+    <!--&lt;!&ndash;                                        <input name="rating-1" type="submit" class="fa fa-star" value=1>&ndash;&gt;-->
+    <!--&lt;!&ndash;                                        <input name="rating-2" type="submit" class="fa fa-star" value=2>&ndash;&gt;-->
+    <!--&lt;!&ndash;                                        <input name="rating-3" type="submit" class="fa fa-star" value=3>&ndash;&gt;-->
+    <!--&lt;!&ndash;                                        <input name="rating-4" type="submit" class="fa fa-star" value=4>&ndash;&gt;-->
+    <!--&lt;!&ndash;                                        <input name="rating-5" type="submit" class="fa fa-star" value=5>&ndash;&gt;-->
+
+    <!--    &lt;!&ndash;                                    <i class="fa fa-star"></i>&ndash;&gt;-->
+    <!--    &lt;!&ndash;                                    <i class="fa fa-star"></i>&ndash;&gt;-->
+    <!--    &lt;!&ndash;                                    <i class="fa fa-star"></i>&ndash;&gt;-->
+    <!--    &lt;!&ndash;                                    <i class="fa fa-star"></i>&ndash;&gt;-->
+    <!--    &lt;!&ndash;                                    <i class="fa fa-star-half"></i>&ndash;&gt;-->
+    <!--                                    </div>-->
+    <!--                                </form>-->
+
+    <!--                                <div id="rating-for-element-{{ element.id }}" class="mp-type__rating">-->
+    <!--                                    <a class="r-link" href="?rating={{ element.id }}">Оценить</a>-->
+    <!--                                    <i id="new-rating" class="fa fa-star">{{ element.rating }}</i>-->
+    <!--                                </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="mp-type__column">
+                        <div class="mp-type__item">
+                            <div class="mp-type__top">
+                                <div class="mp-type__header">Данных нет</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            {% if elements.paginator.num_pages > 1 %}
+                <div id="pagination">
+                    {% if elements.has_previous %}
+                        <a class="p-link" href="?page=1">Первая</a>
+                    {% endif %}
+                    {% if elements.has_previous %}
+                        <a class="p-link" href="?page={{ elements.previous_page_number }}">Предыдущая</a>
+                    {% endif %}
+                    <span class="current">
+                        {% for i in elements.paginator.page_range %}
+                            {% if i == elements.number %}
+                                [ {{ i }} ]
+                            {% else %}
+                                <a class="p-link" href="?page={{ i }}">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                    {% if elements.has_next %}
+                        <a class="p-link" href="?page={{ elements.next_page_number }}">Следующая</a>
+                    {% endif %}
+                    {% if elements.has_next %}
+                        <a class="p-link" href="?page={{ elements.paginator.num_pages }}">Последняя</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

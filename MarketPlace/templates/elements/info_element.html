@@ -1,0 +1,97 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}{{ element.element_name }} | RS{% endblock %}
+
+{% block search %}
+    <h1 class="hero__title">{{ element.element_name }}<br><span>{{ element.fk_city }}</span></h1>
+{% endblock %}
+
+{% block content %}
+    <section class="mp-header">
+        <div class="container">
+            <div class="mp-header__cover">
+                <img src="{{ MEDIA_URL }}{{ element.element_preview_img }}" alt="" class="mp-header__img">
+                <span class="mp-header__header">
+                    <h1>&laquo;{{ element.element_name }}&raquo;</h1>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section mp-detail">
+        <div class="container">
+            <div class="mp-detail__wrapper">
+                <div class="mp-detail__content">
+                    <div class="mp-detail__description">
+                        {{ element.element_description|safe }}
+                        <div id="lightgallery" class="mp-detail__gallery">
+                            {% for image in gallery %}
+                                <div style="display: inline-block; margin-right: 1px;" data-src="{{ MEDIA_URL }}{{ image.image }}">
+                                    <a href="">
+                                        <img width="200" class="img-responsive" src="{{ MEDIA_URL }}{{ image.image }}" alt="">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mp-detail__sidebar">
+                    <div class="mp-detail__facts">
+                        {% if element.fact_value_1 and element.fact_desc_1 %}
+                            <div class="mp-detail__facts-item">
+                                <div class="mp-detail__facts-value">{{ element.fact_value_1 }}</div>
+                                <div class="mp-detail__facts-desc">{{ element.fact_desc_1 }}</div>
+                            </div>
+                        {% endif %}
+                        {% if element.fact_value_2 and element.fact_desc_2 %}
+                            <div class="mp-detail__facts-item">
+                                <div class="mp-detail__facts-value">{{ element.fact_value_2 }}</div>
+                                <div class="mp-detail__facts-desc">{{ element.fact_desc_2 }}</div>
+                            </div>
+                        {% endif %}
+                        {% if element.fact_value_3 and element.fact_desc_3 %}
+                            <div class="mp-detail__facts-item">
+                                <div class="mp-detail__facts-value">{{ element.fact_value_3 }}</div>
+                                <div class="mp-detail__facts-desc">{{ element.fact_desc_3 }}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mp-detail__contacts">
+                        <div class="mp-detail__phone">
+                            {{ element.element_phone }}
+                        </div>
+                        <div class="mp-detail__link">
+                            {% for link in links %}
+                                <a href="{{ link.element_link }}">{{ link.element_link }}</a>
+                            {% endfor %}
+                        </div>
+                        <div class="mp-detail__email">
+                            {{ element.element_email }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section mp-events">
+        <div class="container">
+            <div class="mp-events__wrapper">
+                {% for poster in posters %}
+                    <div class="mp-events__column">
+                        <div class="mp-events__item">
+                            <div class="mp-events__cover">
+                                <img src="{{ MEDIA_URL }}{{ poster.image }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

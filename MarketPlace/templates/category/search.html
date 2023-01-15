@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <section class="section mp-categories">
+        <div class="container">
+            <div id="list-elements" class="mp-categories__wrapper">
+                {% if elements %}
+                    {% for element in elements %}
+                        <div class="mp-type__column">
+                            <div class="mp-type__item">
+                                <div class="mp-type__media">
+                                    <a href="{% url 'info-element' element.id %}">
+                                        <img src="{{ MEDIA_URL }}{{ element.element_preview_img }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="mp-type__content">
+                                    <div class="mp-type__top">
+                                        {% for tag in element.tag_set.all %}
+                                            <div class="mp-type__tag">{{ tag.tag_name }}</div>
+                                        {% endfor %}
+                                        <div class="mp-type__city">{{ element.fk_city }}</div>
+                                    </div>
+                                    <div class="mp-type__header">
+                                        <a href="{% url 'info-element' element.id %}">{{ element.element_name }}</a>
+                                    </div>
+                                    <div class="mp-type__description">{{ element.element_preview_text }}</div>
+<!--                                    <div class="mp-type__rating">-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star-half"></i>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="mp-type__column">
+                        <div class="mp-type__item">
+                            <div class="mp-type__top">
+                                <div class="mp-type__header">Ничего не найдено</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
