@@ -1,0 +1,178 @@
+.smi
+    margin: 50px 0
+    color: #fff
+    font-family: 'Scada', sans-serif
+    &-wrap
+        display: flex
+    &-content
+        flex: 1 1 70%
+        padding: 10px
+    &-item
+        border: 1px solid rgba(255, 255, 255, 0.1)
+        padding: 15px 20px 0 20px
+        margin-bottom: 30px
+        &__header
+            display: flex
+            align-items: center
+            justify-content: space-between
+            margin: 0 0 10px 0
+        &__date
+            font-size: 14px
+            color: #a79c9c
+        &__author
+            display: flex
+            align-items: center
+            font-size: 14px
+            a
+                text-decoration: none
+                color: #a79c9c
+                transition: all 0.5s ease 0s
+            a:hover
+                color: #cc0000
+                transition: all 0.5s ease 0s
+        &__avaimg
+            margin-right: 3px
+            border-radius: 100px
+        &__preview
+            margin: 20px 0 0 0
+        &__title
+            margin: 15px 0 15px 0
+            font-size: 24px
+            a
+                color: #a79c9c
+                text-decoration: none
+                border: none
+                transition: all 0.5s ease 0s
+            a:hover
+                color: #cc0000
+                transition: all 0.5s ease 0s
+        &__text
+            p
+                font-weight: 300
+                font-size: 15px
+                line-height: 20px
+                letter-spacing: 0.03em
+                color: #a79c9c
+        &__img
+            img
+                width: 100%
+                
+        
+        &__footer
+            display: flex
+            align-items: center
+            justify-content: space-between
+            margin-bottom: 0
+        &__comments
+            font-size: 14px
+            a
+                color: #a79c9c
+                text-decoration: none
+                border: none
+                transition: all 0.5s ease 0s
+            a:hover
+                color: #cc0000
+                transition: all 0.5s ease 0s
+            i
+                margin-right: 3px
+        &__watchcounter
+            font-size: 14px
+            color: #a79c9c
+            i
+                margin-right: 3px
+    
+    &-sidebar
+        flex: 0 0 30%
+        padding: 10px 0 0 20px
+    &-news
+        border: 1px solid rgba(255, 255, 255, 0.1)
+        padding: 20px
+        &__item
+            margin-bottom: 20px
+        &__item:last-child
+            margin-bottom: 0
+        &__date
+            font-size: 12px
+            color: #a79c9c
+            margin-bottom: 5px
+        &__text
+            font-size: 14px
+            line-height: 22px
+            letter-spacing: 0.01em
+            a
+                color: rgba(255, 255, 255, 0.8)
+                text-decoration: none
+                border-bottom: 1px solid rgba(255, 255, 255, 0.8)
+                transition: all 0.5s ease 0s
+            a:hover
+                color: #cc0000
+                transition: all 0.5s ease 0s
+                border-bottom: 1px solid #cc0000
+    &-menu
+        margin: 20px 0
+        &__wrap
+            margin: 0
+        &__list
+            font-family: 'Scada', sans-serif
+            font-weight: 700
+            font-size: 14px
+            margin: 0
+            padding: 0
+            list-style: none
+            background-color: #000000
+        &__items
+            background-color: #dedede
+            margin-bottom: 1px
+            letter-spacing: 0.01em
+            a
+                display: block
+                background: #424242
+                height: 50px
+                line-height: 53px
+                padding-left: 20px
+                position: relative
+                font-weight: 300
+                text-decoration: none
+                color: #f6f6f6
+                font-size: 16px
+                text-transform: uppercase
+                letter-spacing: 0.03em
+                transition: all 0.3s ease 0s
+                i
+                    margin-right: 5px
+            a:hover
+                background-color: #666565
+                transition: all 0.3s ease 0s
+
+            span
+                float: right
+                margin-right: 20px
+                display: inline-block
+                height: 20px
+                line-height: 16px
+                padding-left: 10px
+                padding-right: 10px
+                font-size: 10px
+                color: #000
+                margin-top: 18px
+
+        &__items:last-child
+            margin-bottom: 0
+    
+    &-tags
+        margin: 20px 0
+        border: 1px solid rgba(255, 255, 255, 0.1)
+        padding: 20px 20px 10px 20px
+        &__wrap
+            display: flex
+            flex-wrap: wrap
+        &__item
+            margin: 0 10px 10px 0
+            border: 1px solid rgba(255, 255, 255, 0.1)
+            padding: 5px 10px
+            border-radius: 4px
+            text-decoration: none
+            color: #fff
+        &__item:hover
+            background-color: #fff
+            color: #000

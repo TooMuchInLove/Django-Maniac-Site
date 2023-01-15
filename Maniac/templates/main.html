@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RS{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/css/lightgallery.css" rel="stylesheet">
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Scada:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://use.fontawesome.com/ecc41221c2.js"></script>
+    <script type="text/javascript" src="{% static 'js/lightgallery.js' %}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="adv">
+            <div class="container">
+                <div class="adv-wrap">
+                    <div class="logo logo__img">
+                        <img src="{% static 'img/logo-white.png' %}" alt="">
+                    </div>
+                    <div class="banner banner__img">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar"></div>
+        <section class="section menu">
+            <div class="container">
+                <div class="menu-wrap">
+                    <div class="menu-nav">
+                        <a href="{% url 'list-category' %}" class="menu__link">Маркетплейс</a>
+                        <a href="{% url 'index-catalog' %}" class="menu__link">Каталог артистов</a>
+                        <a href="{% url 'index-media' 'all' 'none' %}" class="menu__link">Статьи</a>
+                        <a href="#" class="menu__link">Афиша</a>
+                        <a href="#" class="menu__link">Мерч</a>
+                    </div>
+                    <div class="menu-search">
+                         {% if request.user.is_authenticated %}<a href="{% url 'profile' %}" class="menu__link">Профиль</a>
+                                                              <a href="{% url 'logout' %}" class="menu__link">Выйти</a>
+                                                    {% else %}<a href="{% url 'login' %}" class="menu__link">Войти</a>{% endif %}
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+                <div class="hero">
+                    <div class="container">
+                        {% block search %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-wrap">
+                <div class="footer__logo"><img src="{% static 'img/logo-white.png' %}" alt="" class="logo__img"></div>
+                <div class="footer__about">&copy;&nbsp;rockstars</div>
+                <div class="footer__menu1">
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="{% url 'list-category' %}">Маркетплейс</a></li>
+                        <li class="footer__item"><a href="{% url 'index-catalog' %}">Каталог артистов</a></li>
+                        <li class="footer__item"><a href="../../../../../onlinemedia/all/tag/none">Статьи</a></li>
+                    </ul>
+                </div>
+                <div class="footer__menu2">
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#">Афиша</a></li>
+                        <li class="footer__item"><a href="#">Мерч</a></li>
+                    </ul>
+                </div>
+                <div class="footer__menu3">
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#">О проекте</a></li>
+                        <li class="footer__item"><a href="#">Прислать статью</a></li>
+                        <li class="footer__item"><a href="#">Реклама на сайте</a></li>
+                    </ul>
+                </div>
+                <div class="footer__sociallinks">
+                    <a href="#"><i class="fa fa-vk" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript">
+        lightGallery(document.getElementById('lightgallery'));
+
+        function ajax_pagination() {
+            $('#pagination a.p-link').each((index, elem) => {
+                $(elem).click((e) => {
+                    e.preventDefault()
+                    let page_url = $(elem).attr('href')
+
+                    $.ajax({
+                        url: page_url,
+                        type: 'GET',
+                        success: (data) => {
+                            $('#list-elements').empty()
+                            $('#list-elements').append($(data).find('#list-elements').html())
+
+                            $('#pagination').empty()
+                            $('#pagination').append($(data).find('#pagination').html())
+                        }
+                    })
+                })
+            })
+        }
+
+        function get_rating() {
+            $('#rating-for-element a.r-link').each((index, elem) => {
+                $(elem).click((e) => {
+                    e.preventDefault()
+                    let page_url = $(elem).attr('href')
+
+                    $.ajax({
+                        url: page_url,
+                        type: 'GET',
+                        success: (data) => {
+                            $('#new-rating').empty()
+                            $('#new-rating').append($(data).find('#new-rating').html())
+                        }
+                    })
+                })
+            })
+        }
+
+        function get_search_info() {
+            $('#pagination a.p-link').each((index, elem) => {
+                $(elem).click((e) => {
+                    e.preventDefault()
+                    let page_url = $(elem).attr('href')
+
+                    $.ajax({
+                        url: page_url,
+                        type: 'GET',
+                        success: (data) => {
+                            $('#list-categories').empty()
+                            $('#list-categories').append($(data).find('#list-categories').html())
+                        }
+                    })
+                })
+            })
+        }
+
+        $(document).ready(function() {
+            ajax_pagination()
+            get_rating()
+        })
+
+        $(document).ajaxStop(function() {
+            ajax_pagination()
+            get_rating()
+        })
+    </script>
+</body>
+</html>
